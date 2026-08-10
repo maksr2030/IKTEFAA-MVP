@@ -41,6 +41,8 @@ const EVIDENCE_PROFILES = {
   }
 };
 
+const FUNCTIONAL_VALIDATION_FEATURE_IDS = new Set([1, 2, 3, 4, 5, 6]);
+
 let sourceFeatures;
 let sourceRegistryStats;
 
@@ -57,6 +59,7 @@ function buildEvidenceRow(feature) {
   const profile = EVIDENCE_PROFILES[feature.status];
   const isReserved = feature.status === "reserved";
   const domainPath = feature.domainLabel || feature.domain;
+  const hasFunctionalValidation = FUNCTIONAL_VALIDATION_FEATURE_IDS.has(feature.id);
 
   return {
     featureId: feature.id,
@@ -80,6 +83,9 @@ function buildEvidenceRow(feature) {
     implementationEvidenceLabel: profile.implementationEvidenceLabel,
     testReference: profile.testReference,
     featureAcceptanceTestStatus: feature.status === "demonstrated" ? "created" : "not-created",
+    functionalValidationStatus: hasFunctionalValidation ? "passed" : feature.status === "demonstrated" ? "not-started" : "not-applicable",
+    functionalValidationLabel: hasFunctionalValidation ? "تحقق وظيفي ناجح محلياً" : feature.status === "demonstrated" ? "لم يبدأ التحقق الوظيفي" : "غير منطبق",
+    functionalValidationReference: hasFunctionalValidation ? `functional-validation.js:${feature.id}; tests/functional-validation.test.cjs:${feature.id}` : "لا يوجد تحقق وظيفي خاص بعد",
     verificationStatus: profile.verificationStatus,
     verificationLabel: profile.verificationLabel,
     liveIntegrationEvidence: false,
@@ -101,6 +107,7 @@ const EVIDENCE_MATRIX_STATS = {
   architectureRows: EVIDENCE_MATRIX.filter((row) => row.registryStatus === "architecture").length,
   reservedRows: EVIDENCE_MATRIX.filter((row) => row.registryStatus === "reserved").length,
   featureSpecificAcceptanceTests: EVIDENCE_MATRIX.filter((row) => row.featureAcceptanceTestStatus === "created").length,
+  functionalValidationRows: EVIDENCE_MATRIX.filter((row) => row.functionalValidationStatus === "passed").length,
   liveIntegrationEvidenceRows: EVIDENCE_MATRIX.filter((row) => row.liveIntegrationEvidence).length,
   revenueEvidenceRows: EVIDENCE_MATRIX.filter((row) => row.revenueEvidence).length,
   acquisitionValuationSupportRows: EVIDENCE_MATRIX.filter((row) => row.acquisitionValuationSupport).length
@@ -110,6 +117,7 @@ if (typeof module !== "undefined") {
   module.exports = {
     SCENARIO_REFERENCE_BY_DOMAIN,
     EVIDENCE_PROFILES,
+    FUNCTIONAL_VALIDATION_FEATURE_IDS,
     buildEvidenceRow,
     EVIDENCE_MATRIX,
     EVIDENCE_MATRIX_STATS
