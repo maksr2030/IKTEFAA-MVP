@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="IKTEFAA 3.0 public MVP: a connected digital commerce, food security, logistics, merchant, payment and social impact operating platform.">
+  <title>IKTEFAA 3.0 | Public MVP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">ا</div>
+        <div>
+          <h1>اكتفاء 3.0</h1>
+          <p>IKTEFAA Public MVP</p>
+        </div>
+      </div>
+      <div class="nav-label">مساحة التشغيل</div>
+      <nav class="nav" aria-label="التنقل الرئيسي">
+        <button class="active" data-route="overview"><span>◈ لوحة القيادة</span><span class="count">01</span></button>
+        <button data-route="commerce"><span>▣ التجارة والأسواق</span><span class="count">08</span></button>
+        <button data-route="stores"><span>▤ المتاجر والمخزون</span><span class="count">12</span></button>
+        <button data-route="supply-chain"><span>⌁ الإمداد والجودة</span><span class="count">10</span></button>
+        <button data-route="logistics"><span>⌖ اللوجستيات والأسطول</span><span class="count">09</span></button>
+        <button data-route="merchant"><span>♙ شبكة التجار</span><span class="count">13</span></button>
+        <button data-route="payments"><span>▰ المدفوعات والتسوية</span><span class="count">18</span></button>
+        <button data-route="impact"><span>♧ الأثر الاجتماعي</span><span class="count">16</span></button>
+        <button data-route="analytics"><span>⌁ الذكاء والتحليلات</span><span class="count">12</span></button>
+        <button data-route="governance"><span>⌘ الحوكمة والامتثال</span><span class="count">13</span></button>
+      </nav>
+      <div class="nav-label">المعرفة العامة</div>
+      <nav class="nav" aria-label="المعرفة العامة">
+        <button data-route="features"><span>▦ سجل 103 ميزة</span><span class="count">103</span></button>
+        <button data-route="scenarios"><span>▷ السيناريوهات التشغيلية</span><span class="count">06</span></button>
+        <button data-route="architecture"><span>⌬ المعمارية العامة</span><span class="count">01</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        نسخة عامة للقراءة والعرض الاستراتيجي. البيانات المعروضة تجريبية، ولا توجد بيانات عملاء أو مفاتيح تشغيلية أو أدوات دفع حقيقية داخل هذه النسخة.
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <h2 id="page-title">لوحة القيادة التنفيذية</h2>
+          <p id="page-subtitle">منصة تشغيل مترابطة للتجارة والغذاء والإمداد والمدفوعات والأثر</p>
+        </div>
+        <div class="topbar-actions">
+          <span class="status-pill">MVP تشغيلي تجريبي</span>
+          <button class="ghost-btn" id="demo-reset">إعادة البيانات</button>
+          <button class="primary-btn" id="run-demo">تشغيل السيناريو</button>
+        </div>
+      </header>
+      <div id="app" class="content"></div>
+    </main>
+  </div>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="features.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
