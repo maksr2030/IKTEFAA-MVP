@@ -70,7 +70,7 @@ The current MVP is a static, inspectable reference implementation. The productio
 
 ## Primary presentation route
 
-The dashboard opens with an executive view suitable for a strategic reviewer from any relevant commerce or enterprise operator. The left navigation exposes each operating domain, while the feature registry makes every recorded feature searchable and traceable. The scenario runner demonstrates the main end-to-end paths across commerce, store operations, supply chain, payment governance, and impact.
+The dashboard opens with an executive view suitable for a strategic reviewer from any relevant commerce or enterprise operator. The left navigation exposes each operating domain, while the feature registry makes every recorded feature searchable and traceable. The scenario runner demonstrates the main end-to-end paths across commerce, store operations, supply chain, payment governance, and impact. The accompanying [Marketplace and Commerce Public Review Brief](IKTEFAA_MARKETPLACE_PUBLIC_REVIEW.md) explains the platform-neutral integration position.
 
 ## Ownership and use
 
