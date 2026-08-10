@@ -3,6 +3,12 @@ const toast = document.getElementById("toast");
 const pageTitle = document.getElementById("page-title");
 const pageSubtitle = document.getElementById("page-subtitle");
 
+const evidenceLabel = (status) => ({
+  demonstrated: "محاكاة قابلة لإعادة التشغيل",
+  architecture: "معمارية معلنة فقط",
+  reserved: "محجوزة أو مدمجة"
+}[status] || status);
+
 const DOMAIN_CONFIG = {
   commerce: {
     title: "التجارة والأسواق",
@@ -32,7 +38,7 @@ const DOMAIN_CONFIG = {
     title: "اللوجستيات والأسطول",
     subtitle: "تنسيق التسليم، مسارات الأسطول، التوصيل المبرد، وسجل التنفيذ من مركز التوزيع إلى الوجهة.",
     icon: "⌖",
-    metrics: [["مركبات متصلة", "74", "تشغيل حي"], ["تسليمات اليوم", "1,206", "91% في الموعد"], ["الأسطول المبرد", "22", "مراقبة الحرارة"]],
+    metrics: [["مركبات متصلة", "74", "حالة محاكاة"], ["تسليمات اليوم", "1,206", "91% في الموعد ضمن النموذج"], ["الأسطول المبرد", "22", "مراقبة حرارة محاكاة"]],
     actions: ["توزيع المسارات", "فحص الأسطول", "تتبع التسليم"],
     rows: [["VH-021", "مسار جدة–مكة", "18 طلباً", "في الطريق"], ["VH-018", "مسار جدة الداخلي", "24 طلباً", "في الموعد"], ["VH-006", "سلسلة تبريد", "9 طلبات", "تحتاج متابعة"]]
   },
@@ -106,18 +112,18 @@ function setHeader(title, subtitle) {
 }
 
 function renderKpis(items) {
-  return `<div class="kpi-grid">${items.map(([label, value, note], index) => `<div class="card kpi ${index === 3 ? "warn" : ""}"><span class="label">${esc(label)}</span><strong>${esc(value)}</strong><small>${esc(note)}</small></div>`).join("")}</div>`;
+  return `<div class="kpi-grid">${items.map(([label, value, note], index) => `<div class="card kpi ${index === 3 ? "warn" : ""}" data-evidence="synthetic"><span class="label">${esc(label)}</span><strong>${esc(value)}</strong><small>${esc(note)}</small><span class="data-badge">بيانات محاكاة</span></div>`).join("")}</div>`;
 }
 
 function renderOverview() {
   setHeader("لوحة القيادة التنفيذية", "طبقة تشغيل وتكامل محايدة لمنصات التجارة والأسواق والأنظمة المؤسسية");
   const modules = Object.entries(DOMAIN_CONFIG).map(([key, config]) => `<article class="card module"><div class="module-icon">${config.icon}</div><h4>${config.title}</h4><p>${config.subtitle}</p><button class="module-link" data-route="${key}">فتح نطاق التشغيل ←</button></article>`).join("");
-  return `<section class="hero"><div><h3>اكتفاء 3.0: طبقة فوق أنظمة التجارة القائمة</h3><p>نسخة MVP عامة توضّح كيف يمكن لطبقة واحدة أن تربط التجارة، المتاجر، المخزون، الإمداد، اللوجستيات، الأسطول، التجار، المدفوعات، الحوكمة، والبرامج الاجتماعية فوق بيئات تجارة إلكترونية وتجارة متعددة القنوات قائمة، دون افتراض استبدال قنواتها أو أنظمتها.</p><div class="hero-badges"><span>محايدة تجاه المنصة</span><span>تجارة وأسواق</span><span>تكامل مؤسسي</span><span>حوكمة وأثر قابل للقياس</span></div></div><div class="hero-side"><div class="hero-metric"><strong>103</strong><span>ميزة مسجلة في سجل اكتفاء 3.0</span></div><div class="hero-metric"><strong>10</strong><span>نطاقات تشغيل مترابطة</span></div><div class="hero-metric"><strong>6</strong><span>سيناريوهات عرض تنفيذية</span></div></div></section>
+  return `<section class="hero"><div><h3>اكتفاء 3.0: طبقة فوق أنظمة التجارة القائمة</h3><p>نسخة MVP عامة توضّح كيف يمكن لطبقة واحدة أن تربط التجارة، المتاجر، المخزون، الإمداد، اللوجستيات، الأسطول، التجار، المدفوعات، الحوكمة، والبرامج الاجتماعية فوق بيئات تجارة إلكترونية وتجارة متعددة القنوات قائمة، دون افتراض استبدال قنواتها أو أنظمتها.</p><div class="hero-badges"><span>محايدة تجاه المنصة</span><span>تجارة وأسواق</span><span>تكامل مؤسسي</span><span>بيانات محاكاة فقط</span></div></div><div class="hero-side"><div class="hero-metric"><strong>${REGISTRY_STATS.canonicalRecords}</strong><span>سجلات موحدة في السجل العام</span></div><div class="hero-metric"><strong>${REGISTRY_STATS.demonstratedFeatures}</strong><span>مسارات قابلة لإعادة التشغيل بالمحاكاة</span></div><div class="hero-metric"><strong>${REGISTRY_STATS.architectureFeatures}</strong><span>قدرات معمارية تحتاج تنفيذًا مستقلاً</span></div></div></section>
     <div class="section-head"><div><h3>المؤشرات التنفيذية التجريبية</h3><p>بيانات اصطناعية مخصصة لعرض مسار التشغيل، وليست بيانات فعلية.</p></div><div class="section-actions"><button class="ghost-btn" data-route="features">استعراض سجل الميزات</button></div></div>
     ${renderKpis([["إجمالي الطلبات", "12,486", "+14.8%"], ["قيمة المعاملات", "4.82 م ر.س", "+9.6%"], ["متاجر ومراكز متصلة", "28", "تشغيل مستمر"], ["تنبيهات تحتاج قراراً", "17", "مسار بشري"], ["مؤشر الأثر", "86.4/100", "+4.2 نقطة"]])}
     <div class="section-head"><div><h3>خريطة القدرات</h3><p>كل نطاق يفتح على شاشة تشغيلية مصغرة مرتبطة بسجل الميزات.</p></div></div>
     <div class="module-grid">${modules}</div>
-    <div class="grid-2" style="margin-top:18px"><section class="card panel"><h4>توزيع جاهزية النطاقات</h4><p class="panel-subtitle">مؤشر عرضي يوضح ما تم تمثيله وظيفياً داخل النسخة العامة.</p><div class="bar-list">${[["التجارة والأسواق", 86], ["المتاجر والمخزون", 82], ["الإمداد واللوجستيات", 79], ["المدفوعات والحوكمة", 74], ["الأثر والتحليلات", 77]].map(([name, value]) => `<div class="bar-row"><div class="bar-meta"><span>${name}</span><span>${value}%</span></div><div class="bar-track"><div class="bar-fill" style="width:${value}%"></div></div></div>`).join("")}</div></section><section class="card panel"><h4>آخر الأحداث في النموذج</h4><p class="panel-subtitle">سلسلة تنفيذ تجريبية تربط الحالات بالقرار والدليل.</p><div class="activity-list">${state.events.map(([text, time]) => `<div class="activity"><i class="activity-dot"></i><div><strong>${text}</strong><small>${time}</small></div></div>`).join("")}</div></section></div>`;
+    <div class="grid-2" style="margin-top:18px"><section class="card panel"><h4>توزيع حالة السجل</h4><p class="panel-subtitle">تصنيف تدقيقي يفرق بين ما يمكن إعادة تشغيله داخل المتصفح وما هو معمارية معلنة فقط.</p><div class="bar-list">${[["محاكاة قابلة لإعادة التشغيل", REGISTRY_STATS.demonstratedFeatures, "#15803d"], ["معمارية معلنة فقط", REGISTRY_STATS.architectureFeatures, "#1261a0"], ["محجوزة أو مدمجة", REGISTRY_STATS.reservedRecords, "#b7791f"]].map(([name, value, color]) => `<div class="bar-row"><div class="bar-meta"><span>${name}</span><span>${value}</span></div><div class="bar-track"><div class="bar-fill" style="width:${(value / REGISTRY_STATS.canonicalRecords) * 100}%;background:${color}"></div></div></div>`).join("")}</div></section><section class="card panel"><h4>آخر الأحداث في النموذج</h4><p class="panel-subtitle">سجل محاكاة محلي، وليس سجلاً تشغيلياً أو مالياً.</p><div class="activity-list">${state.events.map(([text, time]) => `<div class="activity"><i class="activity-dot"></i><div><strong>${text}</strong><small>${time}</small></div></div>`).join("")}</div></section></div>`;
 }
 
 function renderDomain(route) {
@@ -125,14 +131,14 @@ function renderDomain(route) {
   setHeader(config.title, config.subtitle);
   const related = FEATURES.filter((feature) => feature.domain === route);
   const rows = config.rows.map(([id, item, source, status]) => `<tr><td class="feature-id">${id}</td><td>${item}</td><td>${source}</td><td><span class="tag ${status.includes("مراجعة") || status.includes("جارٍ") || status.includes("متابعة") ? "reserved" : "demo"}">${status}</span></td></tr>`).join("");
-  return `<section class="hero"><div><h3>${config.title}</h3><p>${config.subtitle} هذه الشاشة تمثل طبقة تشغيلية مصغرة من المشروع الكامل، مع مؤشرات وحالات قابلة للفحص.</p><div class="hero-badges"><span>${related.length} ميزة مرتبطة</span><span>بيانات تجريبية</span><span>مسار قابل للتوسع</span></div></div><div class="hero-side"><div class="hero-metric"><strong>${related.length}</strong><span>ميزة في هذا النطاق</span></div><div class="hero-metric"><strong>${config.metrics[0][1]}</strong><span>${config.metrics[0][0]}</span></div><div class="hero-metric"><strong>LIVE</strong><span>حالة العرض المحلي</span></div></div></section>
-  <div class="section-head"><div><h3>مؤشرات النطاق</h3><p>لقطة تشغيلية توضيحية وليست قياساً إنتاجياً.</p></div></div>${renderKpis(config.metrics.concat([["قرارات قيد المراجعة", "17", "اعتماد بشري"], ["سلامة سجل الدليل", "99.9%", "تجريبي"]]))}
-  <div class="grid-2" style="margin-top:18px"><section class="card panel"><h4>إجراءات التشغيل</h4><p class="panel-subtitle">كل إجراء يوضح نقطة يمكن تحويلها إلى خدمة أو واجهة تشغيل في النسخة الإنتاجية.</p><div class="scenario-grid" style="grid-template-columns:1fr">${config.actions.map((action, index) => `<button class="ghost-btn" data-action="${esc(action)}" style="text-align:right">${index + 1}. ${action} <span style="float:left;color:#1261a0">←</span></button>`).join("")}</div></section><section class="card panel"><h4>الميزات المرتبطة</h4><p class="panel-subtitle">روابط مباشرة إلى سجل الميزات العامة.</p><div class="bar-list">${related.slice(0, 7).map((feature) => `<div class="bar-row"><div class="bar-meta"><span>${feature.id}. ${feature.ar}</span><span>${feature.status === "demo" ? "Demo" : "Architecture"}</span></div><div class="bar-track"><div class="bar-fill" style="width:${feature.status === "demo" ? 84 : 56}%"></div></div></div>`).join("")}</div><button class="primary-btn" data-route="features" style="margin-top:16px">عرض السجل الكامل</button></section></div>
+  return `<section class="hero"><div><h3>${config.title}</h3><p>${config.subtitle} هذه الشاشة تمثل طبقة تشغيلية مصغرة من المشروع الكامل، مع مؤشرات وحالات قابلة للفحص.</p><div class="hero-badges"><span>${related.length} سجل مرتبط</span><span>بيانات محاكاة</span><span>لا يوجد تكامل حي</span></div></div><div class="hero-side"><div class="hero-metric"><strong>${related.length}</strong><span>سجل في هذا النطاق</span></div><div class="hero-metric"><strong>${config.metrics[0][1]}</strong><span>${config.metrics[0][0]} محاكاة</span></div><div class="hero-metric"><strong>DEMO</strong><span>حالة العرض المحلي</span></div></div></section>
+  <div class="section-head"><div><h3>مؤشرات النطاق</h3><p>جميع القيم التالية اصطناعية لأغراض العرض ولا تثبت أداءً إنتاجياً.</p></div></div>${renderKpis(config.metrics.concat([["قرارات قيد المراجعة", "17", "مسار محاكاة"], ["سلامة سجل الدليل", "99.9%", "مؤشر اصطناعي"]]))}
+  <div class="grid-2" style="margin-top:18px"><section class="card panel"><h4>إجراءات التشغيل</h4><p class="panel-subtitle">كل إجراء يوضح نقطة يمكن تحويلها إلى خدمة أو واجهة تشغيل في النسخة الإنتاجية.</p><div class="scenario-grid" style="grid-template-columns:1fr">${config.actions.map((action, index) => `<button class="ghost-btn" data-action="${esc(action)}" style="text-align:right">${index + 1}. ${action} <span style="float:left;color:#1261a0">←</span></button>`).join("")}</div></section><section class="card panel"><h4>الميزات المرتبطة</h4><p class="panel-subtitle">روابط مباشرة إلى سجل الميزات العامة.</p><div class="bar-list">${related.slice(0, 7).map((feature) => `<div class="bar-row"><div class="bar-meta"><span>${feature.id}. ${feature.ar}</span><span>${evidenceLabel(feature.status)}</span></div><div class="bar-track"><div class="bar-fill" style="width:${feature.status === "demonstrated" ? 84 : 56}%"></div></div></div>`).join("")}</div><button class="primary-btn" data-route="features" style="margin-top:16px">عرض السجل الكامل</button></section></div>
   <section class="card page-card" style="margin-top:18px"><div class="section-head" style="margin-top:0"><div><h3>حالات تشغيل نموذجية</h3><p>السجل التالي يبين كيف يظهر النطاق في واجهة عمل مستثمر أو مشغل مؤسسي.</p></div></div><div style="overflow-x:auto"><table class="feature-table"><thead><tr><th>المعرف</th><th>الحالة أو الكيان</th><th>المصدر أو المسار</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
 }
 
 function renderFeatures() {
-  setHeader("سجل 103 ميزة", "سجل عام قابل للبحث يغطي الميزات المذكورة في مواصفات اكتفاء 3.0");
+  setHeader("سجل الميزات الموحد", "100 سجل موحد من 103 سجلات تاريخية، مع حفظ روابط الدمج للتدقيق");
   const query = state.featureQuery.trim().toLowerCase();
   const filtered = FEATURES.filter((feature) => {
     const matchesQuery = !query || `${feature.id} ${feature.ar} ${feature.en}`.toLowerCase().includes(query);
@@ -143,8 +149,8 @@ function renderFeatures() {
   const pages = Math.max(1, Math.ceil(filtered.length / perPage));
   state.featurePage = Math.min(state.featurePage, pages);
   const visible = filtered.slice((state.featurePage - 1) * perPage, state.featurePage * perPage);
-  const body = visible.length ? visible.map((feature) => `<tr><td class="feature-id">${feature.id}</td><td class="feature-name"><b>${esc(feature.ar)}</b><span>${esc(feature.en)}</span></td><td><span class="tag">${esc(feature.domainLabel)}</span></td><td><span class="tag ${feature.status === "reserved" ? "reserved" : feature.status === "demo" ? "demo" : ""}">${feature.status === "reserved" ? "محجوزة أو مدمجة" : feature.status === "demo" ? "Demo" : "Architecture"}</span></td></tr>`).join("") : `<tr><td colspan="4"><div class="empty">لا توجد ميزات مطابقة للبحث الحالي.</div></td></tr>`;
-  return `<section class="card page-card"><div class="notice"><strong>نطاق السجل:</strong> يعرض هذا القسم جميع البنود من 1 إلى 103 كما وردت في سجل اكتفاء 3.0. وجود الميزة في السجل لا يعني أن النسخة العامة تنفذها إنتاجياً أو أنها اعتماد تنظيمي نهائي.</div><div class="filter-row"><input id="feature-search" value="${esc(state.featureQuery)}" placeholder="ابحث برقم الميزة أو الاسم العربي أو الإنجليزي"><select id="feature-domain"><option value="all">كل النطاقات</option>${Object.entries(DOMAIN_LABELS).map(([key, label]) => `<option value="${key}" ${state.featureDomain === key ? "selected" : ""}>${label}</option>`).join("")}</select><button class="ghost-btn" id="clear-feature-filter">مسح البحث</button></div><div style="overflow-x:auto"><table class="feature-table"><thead><tr><th>رقم</th><th>الاسم</th><th>النطاق</th><th>الحالة في MVP</th></tr></thead><tbody>${body}</tbody></table></div><div class="pager"><span>عرض ${visible.length} من ${filtered.length} ميزة مطابقة</span><div class="pager-actions"><button class="ghost-btn" id="feature-prev" ${state.featurePage <= 1 ? "disabled" : ""}>السابق</button><span style="padding:9px 3px">${state.featurePage} / ${pages}</span><button class="ghost-btn" id="feature-next" ${state.featurePage >= pages ? "disabled" : ""}>التالي</button></div></div></section>`;
+  const body = visible.length ? visible.map((feature) => `<tr><td class="feature-id">${feature.id}</td><td class="feature-name"><b>${esc(feature.ar)}</b><span>${esc(feature.en)}</span>${feature.legacyIds.length > 1 ? `<small class="legacy-id">السجلات المدمجة: ${feature.legacyIds.join(", ")}</small>` : ""}</td><td><span class="tag">${esc(feature.domainLabel)}</span></td><td><span class="tag ${feature.status === "reserved" ? "reserved" : feature.status === "demonstrated" ? "demo" : ""}">${evidenceLabel(feature.status)}</span></td></tr>`).join("") : `<tr><td colspan="4"><div class="empty">لا توجد ميزات مطابقة للبحث الحالي.</div></td></tr>`;
+  return `<section class="card page-card"><div class="notice"><strong>نطاق السجل:</strong> السجل التاريخي يحتوي على ${REGISTRY_STATS.historicalRecords} بنداً. بعد دمج ${REGISTRY_STATS.mergedRecords} سجلات مكررة أصبح العرض الموحد ${REGISTRY_STATS.canonicalRecords} سجلاً: ${REGISTRY_STATS.definedFeatures} ميزة معرفة و${REGISTRY_STATS.reservedRecords} سجلات محجوزة. وجود السجل لا يعني تنفيذه إنتاجياً.</div><div class="filter-row"><input id="feature-search" value="${esc(state.featureQuery)}" placeholder="ابحث برقم السجل أو الاسم العربي أو الإنجليزي"><select id="feature-domain"><option value="all">كل النطاقات</option>${Object.entries(DOMAIN_LABELS).map(([key, label]) => `<option value="${key}" ${state.featureDomain === key ? "selected" : ""}>${label}</option>`).join("")}</select><button class="ghost-btn" id="clear-feature-filter">مسح البحث</button></div><div style="overflow-x:auto"><table class="feature-table"><thead><tr><th>المعرف الموحد</th><th>الاسم</th><th>النطاق</th><th>دليل النسخة العامة</th></tr></thead><tbody>${body}</tbody></table></div><div class="pager"><span>عرض ${visible.length} من ${filtered.length} سجلاً موحداً</span><div class="pager-actions"><button class="ghost-btn" id="feature-prev" ${state.featurePage <= 1 ? "disabled" : ""}>السابق</button><span style="padding:9px 3px">${state.featurePage} / ${pages}</span><button class="ghost-btn" id="feature-next" ${state.featurePage >= pages ? "disabled" : ""}>التالي</button></div></div></section>`;
 }
 
 const SCENARIOS = [
@@ -167,7 +173,16 @@ function renderArchitecture() {
 }
 
 function updateNav() {
-  document.querySelectorAll(".nav button").forEach((button) => button.classList.toggle("active", button.dataset.route === state.route));
+  document.querySelectorAll(".nav button").forEach((button) => {
+    button.classList.toggle("active", button.dataset.route === state.route);
+    const count = button.querySelector(".count");
+    if (!count) return;
+    if (DOMAIN_CONFIG[button.dataset.route]) {
+      count.textContent = FEATURES.filter((feature) => feature.domain === button.dataset.route).length;
+    } else if (button.dataset.route === "features") {
+      count.textContent = REGISTRY_STATS.canonicalRecords;
+    }
+  });
 }
 
 function render() {
@@ -176,6 +191,7 @@ function render() {
   else if (state.route === "scenarios") app.innerHTML = renderScenarios();
   else if (state.route === "architecture") app.innerHTML = renderArchitecture();
   else app.innerHTML = renderDomain(state.route);
+  app.innerHTML = app.innerHTML.replace(/<strong>103<\/strong><span>ميزة في السجل<\/span>/, `<strong>${REGISTRY_STATS.canonicalRecords}</strong><span>سجلات موحدة</span>`);
   updateNav();
   bindEvents();
 }

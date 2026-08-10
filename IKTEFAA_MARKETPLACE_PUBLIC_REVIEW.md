@@ -14,7 +14,7 @@ Illustrative review audiences may include global and regional operators such as 
 
 - A unified executive dashboard for reviewing the connected operating model.
 - Separate workspaces for commerce, stores, supply chain, logistics, merchants, payments, impact, analytics, and governance.
-- Searchable coverage of all 103 recorded IKTEFAA 3.0 features.
+- Searchable coverage of 100 canonical records derived from 103 historical entries, with duplicate lineage retained for auditability.
 - End-to-end demonstration scenarios that connect commercial activity with fulfilment, settlement, evidence, and impact.
 - A layered architecture that separates the digital platform from physical operating assets and existing enterprise systems.
 - An integration position that can be evaluated against marketplace, retail, wholesale, and omnichannel environments.
@@ -40,11 +40,11 @@ These layers are shown together because they create the complete operating propo
 
 ## Technical review route
 
-Start with `index.html`, open the executive dashboard, and inspect each operating domain. Use the feature registry to search by feature number or name. Use the scenario runner to generate an event trail in the dashboard. Read `README.md` for the platform-neutral integration position, public scope, production boundary, and ownership notice.
+Start with `index.html`, open the executive dashboard, and inspect each operating domain. Use the feature registry to search by feature number or name. Use the scenario runner to generate an event trail in the dashboard. Read `README.md` and `DEMO_GUIDE.md` for the platform-neutral integration position, public scope, production boundary, and repeatable review route.
 
 ## Production path
 
-The public MVP is intentionally self-contained and uses synthetic data. It does not contain a live integration with Amazon, Alibaba, Noon, or any other marketplace or commerce operator. A production programme would require a governed service architecture, authentication, data protection, observability, resilience, security testing, payment-provider integration, regulatory approvals, independent Shari'ah review where applicable, operating validation, and formal acceptance testing.
+The public MVP is intentionally self-contained and uses synthetic data. It does not contain a live integration with Amazon, Alibaba, Noon, or any other marketplace or commerce operator. The included integration contract is a provider-neutral reference fixture and records that no live connection exists. A production programme would require a governed service architecture, authentication, data protection, observability, resilience, security testing, payment-provider integration, regulatory approvals, independent Shari'ah review where applicable, operating validation, and formal acceptance testing.
 
 ## Important qualification
 

@@ -1,4 +1,4 @@
-const FEATURE_ROWS = [
+const FEATURE_ROWS_RAW = [
   [1, "السلة الذكية", "Smart Basket", "commerce"],
   [2, "المزاد العكسي الذكي", "Smart Reverse Auction™", "commerce"],
   [3, "التقارير المحاسبية المؤتمتة والقابلة للطباعة", "Automated & Printable Accounting Reports™", "finance"],
@@ -119,11 +119,62 @@ const DOMAIN_LABELS = {
   reserved: "محجوزة أو مدمجة"
 };
 
-const FEATURES = FEATURE_ROWS.map(([id, ar, en, domain]) => ({
-  id,
-  ar,
-  en,
-  domain,
-  domainLabel: DOMAIN_LABELS[domain],
-  status: domain === "reserved" ? "reserved" : id <= 12 || [26, 27, 65, 67, 68, 69, 73, 78, 95, 100, 101, 102].includes(id) ? "demo" : "architecture"
-}));
+const FEATURE_ALIASES = {
+  44: 41,
+  45: 37,
+  46: 38
+};
+
+const FEATURE_LEGACY_IDS = {
+  37: [37, 45],
+  38: [38, 46],
+  41: [41, 44]
+};
+
+const DEMONSTRATED_FEATURE_IDS = new Set([
+  ...Array.from({ length: 12 }, (_, index) => index + 1),
+  26, 27, 65, 67, 68, 69, 73, 78, 95, 100, 101, 102
+]);
+
+const FEATURE_ROWS = FEATURE_ROWS_RAW
+  .filter(([id]) => !Object.prototype.hasOwnProperty.call(FEATURE_ALIASES, id));
+
+const FEATURES = FEATURE_ROWS.map(([id, ar, en, domain]) => {
+  const status = domain === "reserved"
+    ? "reserved"
+    : DEMONSTRATED_FEATURE_IDS.has(id)
+      ? "demonstrated"
+      : "architecture";
+
+  return {
+    id,
+    ar,
+    en,
+    domain,
+    domainLabel: DOMAIN_LABELS[domain],
+    status,
+    legacyIds: FEATURE_LEGACY_IDS[id] || [id],
+    evidenceClass: status === "demonstrated" ? "browser-simulation" : status
+  };
+});
+
+const REGISTRY_STATS = {
+  historicalRecords: FEATURE_ROWS_RAW.length,
+  canonicalRecords: FEATURES.length,
+  definedFeatures: FEATURES.filter((feature) => feature.status !== "reserved").length,
+  demonstratedFeatures: FEATURES.filter((feature) => feature.status === "demonstrated").length,
+  architectureFeatures: FEATURES.filter((feature) => feature.status === "architecture").length,
+  reservedRecords: FEATURES.filter((feature) => feature.status === "reserved").length,
+  mergedRecords: FEATURE_ROWS_RAW.length - FEATURES.length
+};
+
+if (typeof module !== "undefined") {
+  module.exports = {
+    FEATURE_ROWS_RAW,
+    FEATURE_ROWS,
+    FEATURES,
+    FEATURE_ALIASES,
+    DOMAIN_LABELS,
+    REGISTRY_STATS
+  };
+}

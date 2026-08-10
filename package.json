@@ -1,0 +1,14 @@
+{
+  "name": "iktefaa-mvp",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Public reference implementation and evidence baseline for IKTEFAA 3.0.",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "check": "node --check app.js && node --check features.js && npm test",
+    "benchmark": "node scripts/benchmark.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -17,7 +17,7 @@ Illustrative market references may include global and regional operators such as
 - Wallets, programmable terms, contract orchestration, settlement simulation, escrow, charity payments, zakat, sadaqah, and waqf flows.
 - Demand forecasting, food-security indicators, digital twins, impact analytics, recommendations, and operational decision support.
 - Regulatory, Shari'ah-governance, audit, risk, identity, and evidence-oriented controls.
-- A complete public registry of the 103 features recorded in the IKTEFAA 3.0 feature register.
+- A canonical public registry of 100 records derived from 103 historical feature-register entries, with duplicate lineage preserved for review.
 
 ## Run the demonstration
 
@@ -30,6 +30,16 @@ python3 -m http.server 8080
 Then open `http://localhost:8080`.
 
 The MVP has no external runtime dependency and uses demo data only. User actions are simulated in the browser so that the operating model can be reviewed without credentials, payment instruments, customer data, or live government integrations.
+
+Run the automated checks with Node.js 20 or later:
+
+```bash
+npm install
+npm run check
+npm run benchmark
+```
+
+The benchmark is a synthetic local regression signal. It is not production throughput, commercial performance, or revenue evidence.
 
 ## Public scope and production boundary
 
@@ -66,7 +76,7 @@ Integration layer
   Payment providers | Government services | Suppliers | Carriers | Enterprise systems
 ```
 
-The current MVP is a static, inspectable reference implementation. The production path is to replace the browser simulation with authenticated services, a governed data platform, policy-controlled integrations, and independently tested operational infrastructure.
+The current MVP is a static, inspectable reference implementation. The production path is to replace the browser simulation with authenticated services, a governed data platform, policy-controlled integrations, and independently tested operational infrastructure. See [Evidence and Technical Due-Diligence Boundary](EVIDENCE_AND_DUE_DILIGENCE.md) for the claim boundary and [Public Demonstration Guide](DEMO_GUIDE.md) for the repeatable review route.
 
 ## Primary presentation route
 
