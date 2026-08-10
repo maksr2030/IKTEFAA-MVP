@@ -17,8 +17,8 @@ const EVIDENCE_PROFILES = {
     implementationEvidenceLabel: "محاكاة داخل المتصفح ببيانات اصطناعية",
     verificationStatus: "verified-browser-demonstration",
     verificationLabel: "متحقق كمسار عرض قابل لإعادة التشغيل",
-    testReference: "tests/registry.test.cjs: registry status; DEMO_GUIDE.md: manual route",
-    nextEvidence: "اختبار قبول خاص بالميزة، تنفيذ قابل للفحص، وبيانات اختبار قابلة لإعادة التشغيل",
+    testReference: "tests/feature-acceptance.test.cjs: browser search rendering acceptance; tests/registry.test.cjs: registry status",
+    nextEvidence: "تنفيذ قابل للفحص، بيانات اختبار قابلة لإعادة التشغيل، وتحقق مستقل من السلوك والأمن والأداء",
     claimBoundary: "لا يثبت إنتاجاً أو تكاملاً حياً أو إيراداً"
   },
   architecture: {
@@ -79,7 +79,7 @@ function buildEvidenceRow(feature) {
     implementationEvidence: profile.implementationEvidence,
     implementationEvidenceLabel: profile.implementationEvidenceLabel,
     testReference: profile.testReference,
-    featureAcceptanceTestStatus: "not-created",
+    featureAcceptanceTestStatus: feature.status === "demonstrated" ? "created" : "not-created",
     verificationStatus: profile.verificationStatus,
     verificationLabel: profile.verificationLabel,
     liveIntegrationEvidence: false,
@@ -100,7 +100,7 @@ const EVIDENCE_MATRIX_STATS = {
   demonstratedRows: EVIDENCE_MATRIX.filter((row) => row.registryStatus === "demonstrated").length,
   architectureRows: EVIDENCE_MATRIX.filter((row) => row.registryStatus === "architecture").length,
   reservedRows: EVIDENCE_MATRIX.filter((row) => row.registryStatus === "reserved").length,
-  featureSpecificAcceptanceTests: 0,
+  featureSpecificAcceptanceTests: EVIDENCE_MATRIX.filter((row) => row.featureAcceptanceTestStatus === "created").length,
   liveIntegrationEvidenceRows: EVIDENCE_MATRIX.filter((row) => row.liveIntegrationEvidence).length,
   revenueEvidenceRows: EVIDENCE_MATRIX.filter((row) => row.revenueEvidence).length,
   acquisitionValuationSupportRows: EVIDENCE_MATRIX.filter((row) => row.acquisitionValuationSupport).length
