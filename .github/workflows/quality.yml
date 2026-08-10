@@ -21,11 +21,13 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
-      - name: Run syntax and evidence tests
-        run: npm run check
+      - name: Build functional validation evidence
+        run: npm run build:functional-validation
       - name: Regenerate evidence matrix
         run: npm run build:evidence
+      - name: Run syntax and evidence tests
+        run: npm run check
       - name: Verify generated evidence files are current
-        run: git diff --exit-code -- evidence-matrix.json EVIDENCE_MATRIX.csv EVIDENCE_MATRIX.md
+        run: git diff --exit-code -- evidence-matrix.json EVIDENCE_MATRIX.csv EVIDENCE_MATRIX.md functional-validation.json functional-evidence-ledger.jsonl FUNCTIONAL_VALIDATION_REPORT.md functional-hash-manifest.sha256.json
       - name: Run synthetic benchmark
         run: npm run benchmark
