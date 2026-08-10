@@ -2,7 +2,11 @@
 
 IKTEFAA 3.0 is a public reference implementation of a sovereign digital commerce, food-security, merchant, payment-orchestration, logistics, and social-impact platform.
 
-This repository is prepared as a readable technical demonstration for strategic review, including Noon acquisition discussions. It presents the platform as one connected operating system rather than as a collection of isolated applications.
+This repository is prepared as a readable technical demonstration for strategic review by marketplace operators, electronic-commerce companies, retailers, omnichannel groups, distributors, and commerce infrastructure providers. It presents the platform as one connected operating layer rather than as a collection of isolated applications.
+
+IKTEFAA is intentionally platform-neutral. It is designed to integrate above or alongside existing commerce platforms and enterprise systems through governed interfaces, events, and data contracts. It does not require a marketplace operator to replace its customer-facing channels, order management, fulfilment, delivery, or payment-provider relationships.
+
+Illustrative market references may include global and regional operators such as Amazon, Alibaba, Noon, and comparable businesses. These references are examples of the intended review audience only and do not imply affiliation, endorsement, partnership, customer status, or integration.
 
 ## What this public MVP demonstrates
 
@@ -31,7 +35,20 @@ The MVP has no external runtime dependency and uses demo data only. User actions
 
 The repository is intentionally public and readable. It is a demonstration of platform structure, operating flows, interfaces, and feature coverage. It is not a production payment service, a bank, an insurer, a governmental integration, a Shari'ah certification, or regulatory approval. Any live deployment requires independent technical, legal, regulatory, security, financial, and Shari'ah review in the applicable jurisdiction.
 
-The public repository does not constitute a transfer, assignment, licence, or waiver of the creator's intellectual-property rights. No production credentials, private customer information, confidential acquisition terms, or financial due-diligence files are included.
+The public repository does not constitute a transfer, assignment, licence, or waiver of the creator's intellectual-property rights. No production credentials, private customer information, confidential transaction terms, or financial due-diligence files are included.
+
+## Platform-neutral integration position
+
+IKTEFAA can be evaluated as a layer that adds shared identity, evidence and provenance, contracts and rights, settlement orchestration, governance, impact measurement, and operational intelligence across existing commerce environments. Its intended integration surface includes, subject to future technical and regulatory validation:
+
+- Marketplace and electronic-commerce channels.
+- Retail, wholesale, and omnichannel commerce systems.
+- Merchant, supplier, catalogue, inventory, and order-management systems.
+- Fulfilment, warehouse, logistics, fleet, and delivery systems.
+- Payment providers, wallets, settlement services, and regulated financial infrastructure.
+- Enterprise resource planning, data platforms, government services, and third-party carriers.
+
+The public MVP demonstrates the operating model and integration logic with synthetic data. It is not evidence of a live connection to Amazon, Alibaba, Noon, or any other named operator.
 
 ## Architecture at a glance
 
@@ -53,7 +70,7 @@ The current MVP is a static, inspectable reference implementation. The productio
 
 ## Primary presentation route
 
-The dashboard opens with an executive view suitable for a strategic reviewer. The left navigation exposes each operating domain, while the feature registry makes every recorded feature searchable and traceable. The scenario runner demonstrates the main end-to-end paths across commerce, store operations, supply chain, payment governance, and impact.
+The dashboard opens with an executive view suitable for a strategic reviewer from any relevant commerce or enterprise operator. The left navigation exposes each operating domain, while the feature registry makes every recorded feature searchable and traceable. The scenario runner demonstrates the main end-to-end paths across commerce, store operations, supply chain, payment governance, and impact.
 
 ## Ownership and use
 
