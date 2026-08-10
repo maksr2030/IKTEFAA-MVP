@@ -18,6 +18,7 @@ Illustrative market references may include global and regional operators such as
 - Demand forecasting, food-security indicators, digital twins, impact analytics, recommendations, and operational decision support.
 - Regulatory, Shari'ah-governance, audit, risk, identity, and evidence-oriented controls.
 - A canonical public registry of 100 records derived from 103 historical feature-register entries, with duplicate lineage preserved for review.
+- A generated feature-level evidence matrix mapping all 100 canonical records, including the 95 defined feature rows and the five reserved or merged records, to their public route, test reference, evidence class, verification state, and next required evidence.
 
 ## Run the demonstration
 
@@ -37,6 +38,9 @@ Run the automated checks with Node.js 20 or later:
 npm install
 npm run check
 npm run benchmark
+
+# Regenerate the feature-level evidence matrix
+npm run build:evidence
 ```
 
 The benchmark is a synthetic local regression signal. It is not production throughput, commercial performance, or revenue evidence.
@@ -77,6 +81,12 @@ Integration layer
 ```
 
 The current MVP is a static, inspectable reference implementation. The production path is to replace the browser simulation with authenticated services, a governed data platform, policy-controlled integrations, and independently tested operational infrastructure. See [Evidence and Technical Due-Diligence Boundary](EVIDENCE_AND_DUE_DILIGENCE.md) for the claim boundary and [Public Demonstration Guide](DEMO_GUIDE.md) for the repeatable review route.
+
+## Evidence matrix
+
+The public evidence matrix is available in [EVIDENCE_MATRIX.md](EVIDENCE_MATRIX.md), [EVIDENCE_MATRIX.csv](EVIDENCE_MATRIX.csv), and [evidence-matrix.json](evidence-matrix.json). It is generated from `features.js` so that record identifiers, duplicate lineage, domain classification, and status cannot drift silently from the public registry.
+
+The matrix currently records 23 browser-simulation demonstrations and 72 architecture-only records. It records zero live company integrations, zero revenue evidence rows, and zero feature-specific acceptance tests. These boundaries remain visible until independent evidence exists.
 
 ## Primary presentation route
 

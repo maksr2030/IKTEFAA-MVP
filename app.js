@@ -18,6 +18,14 @@ const DOMAIN_CONFIG = {
     actions: ["إنشاء سلة ذكية", "محاكاة مزاد عكسي", "تحليل الطلب"],
     rows: [["B-2048", "سلة تموين أسبوعية", "متجر جدة المركزي", "قيد التجهيز"], ["B-2047", "احتياج غذائي أساسي", "برنامج الأثر", "مكتمل"], ["B-2046", "طلب توريد مؤسسي", "تاجر موثّق", "تحتاج مراجعة"]]
   },
+  finance: {
+    title: "المحاسبة والمالية",
+    subtitle: "تقارير محاسبية قابلة للمراجعة والطباعة ضمن حدود بيانات العرض الاصطناعية.",
+    icon: "▤",
+    metrics: [["تقارير معدة", "18", "بيانات محاكاة"], ["حركات مصنفة", "3,420", "ضمن النموذج"], ["حالات تحتاج مراجعة", "07", "مسار بشري"]],
+    actions: ["إنشاء تقرير محاسبي", "مراجعة حركة مالية", "طباعة سجل العرض"],
+    rows: [["AC-018", "تقرير دورة التوريد", "بيانات اصطناعية", "جاهز للمراجعة"], ["AC-017", "ملخص أثر اجتماعي", "سجل محاكاة", "قيد التدقيق"], ["AC-016", "تسوية نموذجية", "دون حركة مالية حقيقية", "للعرض فقط"]]
+  },
   stores: {
     title: "المتاجر والمخزون",
     subtitle: "ربط المتاجر الفعلية بالمخزون، نقاط البيع، المستودعات، وإعادة التوريد الذكية.",
@@ -89,6 +97,9 @@ const state = {
   featurePage: 1,
   featureQuery: "",
   featureDomain: "all",
+  evidencePage: 1,
+  evidenceQuery: "",
+  evidenceStatus: "all",
   events: [
     ["تم اعتماد شحنة SH-8841 مع إثبات المنشأ", "منذ 4 دقائق"],
     ["تمت مطابقة معاملة TX-89201 مع قواعد المسار", "منذ 11 دقيقة"],
@@ -153,6 +164,23 @@ function renderFeatures() {
   return `<section class="card page-card"><div class="notice"><strong>نطاق السجل:</strong> السجل التاريخي يحتوي على ${REGISTRY_STATS.historicalRecords} بنداً. بعد دمج ${REGISTRY_STATS.mergedRecords} سجلات مكررة أصبح العرض الموحد ${REGISTRY_STATS.canonicalRecords} سجلاً: ${REGISTRY_STATS.definedFeatures} ميزة معرفة و${REGISTRY_STATS.reservedRecords} سجلات محجوزة. وجود السجل لا يعني تنفيذه إنتاجياً.</div><div class="filter-row"><input id="feature-search" value="${esc(state.featureQuery)}" placeholder="ابحث برقم السجل أو الاسم العربي أو الإنجليزي"><select id="feature-domain"><option value="all">كل النطاقات</option>${Object.entries(DOMAIN_LABELS).map(([key, label]) => `<option value="${key}" ${state.featureDomain === key ? "selected" : ""}>${label}</option>`).join("")}</select><button class="ghost-btn" id="clear-feature-filter">مسح البحث</button></div><div style="overflow-x:auto"><table class="feature-table"><thead><tr><th>المعرف الموحد</th><th>الاسم</th><th>النطاق</th><th>دليل النسخة العامة</th></tr></thead><tbody>${body}</tbody></table></div><div class="pager"><span>عرض ${visible.length} من ${filtered.length} سجلاً موحداً</span><div class="pager-actions"><button class="ghost-btn" id="feature-prev" ${state.featurePage <= 1 ? "disabled" : ""}>السابق</button><span style="padding:9px 3px">${state.featurePage} / ${pages}</span><button class="ghost-btn" id="feature-next" ${state.featurePage >= pages ? "disabled" : ""}>التالي</button></div></div></section>`;
 }
 
+function renderEvidence() {
+  setHeader("مصفوفة الإثبات", "ربط كل سجل بالمسار الظاهر، ومرجع الاختبار، ونوع الدليل، وحدود الادعاء");
+  const query = state.evidenceQuery.trim().toLowerCase();
+  const filtered = EVIDENCE_MATRIX.filter((row) => {
+    const matchesQuery = !query || `${row.featureId} ${row.ar} ${row.en} ${row.domainLabel}`.toLowerCase().includes(query);
+    const matchesStatus = state.evidenceStatus === "all" || row.registryStatus === state.evidenceStatus;
+    return matchesQuery && matchesStatus;
+  });
+  const perPage = 10;
+  const pages = Math.max(1, Math.ceil(filtered.length / perPage));
+  state.evidencePage = Math.min(state.evidencePage, pages);
+  const visible = filtered.slice((state.evidencePage - 1) * perPage, state.evidencePage * perPage);
+  const statusClass = (status) => status === "reserved" ? "reserved" : status === "demonstrated" ? "demo" : "";
+  const body = visible.length ? visible.map((row) => `<tr><td class="feature-id">${row.featureId}</td><td class="feature-name"><b>${esc(row.ar)}</b><span>${esc(row.en)}</span>${row.legacyIds.length > 1 ? `<small class="legacy-id">السجلات المدمجة: ${row.legacyIds.join(", ")}</small>` : ""}</td><td><span class="tag">${esc(row.domainLabel)}</span></td><td>${esc(row.displayPath)}<small class="legacy-id">${esc(row.scenarioReference)}</small></td><td><span class="tag ${statusClass(row.registryStatus)}">${esc(row.verificationLabel)}</span><small class="legacy-id">${esc(row.implementationEvidenceLabel)}</small></td><td><span class="tag">${esc(row.featureAcceptanceTestStatus === "not-created" ? "لم ينشأ بعد" : row.featureAcceptanceTestStatus)}</span><small class="legacy-id">${esc(row.testReference)}</small></td><td>${esc(row.nextEvidence)}<small class="legacy-id">${esc(row.claimBoundary)}</small></td></tr>`).join("") : `<tr><td colspan="7"><div class="empty">لا توجد سجلات مطابقة للبحث الحالي.</div></td></tr>`;
+  return `<section class="card page-card"><div class="notice"><strong>حدود المصفوفة:</strong> هذه الصفحة تثبت قابلية التتبع بين سجل الميزات ومسارات العرض والاختبارات. لا تحول وجود السجل إلى إثبات تنفيذ إنتاجي. لا توجد في النسخة العامة الحالية اختبارات قبول خاصة بالميزات، أو أدلة تكامل حي، أو أدلة إيرادات، أو صفوف تدعم تقييماً استحواذياً نهائياً.</div><div class="kpi-grid"><div class="card kpi"><span class="label">الميزات المعرفة</span><strong>${EVIDENCE_MATRIX_STATS.definedFeatureRows}</strong><small>من ${EVIDENCE_MATRIX_STATS.sourceCanonicalRecords} سجلاً موحداً</small><span class="data-badge">سجل قابل للتدقيق</span></div><div class="card kpi"><span class="label">محاكاة قابلة لإعادة التشغيل</span><strong>${EVIDENCE_MATRIX_STATS.demonstratedRows}</strong><small>بيانات اصطناعية فقط</small><span class="data-badge">دليل عرض</span></div><div class="card kpi"><span class="label">معمارية غير منفذة</span><strong>${EVIDENCE_MATRIX_STATS.architectureRows}</strong><small>تحتاج تنفيذاً مستقلاً</small><span class="data-badge">حد الادعاء</span></div><div class="card kpi warn"><span class="label">اختبارات قبول خاصة</span><strong>${EVIDENCE_MATRIX_STATS.featureSpecificAcceptanceTests}</strong><small>لا توجد في هذه النسخة</small><span class="data-badge">فجوة تحقق</span></div></div><div class="filter-row"><input id="evidence-search" value="${esc(state.evidenceQuery)}" placeholder="ابحث برقم السجل أو اسم الميزة"><select id="evidence-status"><option value="all">كل الحالات</option><option value="demonstrated" ${state.evidenceStatus === "demonstrated" ? "selected" : ""}>محاكاة قابلة لإعادة التشغيل</option><option value="architecture" ${state.evidenceStatus === "architecture" ? "selected" : ""}>معمارية معلنة فقط</option><option value="reserved" ${state.evidenceStatus === "reserved" ? "selected" : ""}>محجوزة أو مدمجة</option></select><button class="ghost-btn" id="clear-evidence-filter">مسح البحث</button></div><div style="overflow-x:auto"><table class="feature-table evidence-table"><thead><tr><th>المعرف</th><th>الميزة</th><th>النطاق</th><th>مسار العرض</th><th>نوع وحالة الدليل</th><th>الاختبار</th><th>الدليل التالي وحد الادعاء</th></tr></thead><tbody>${body}</tbody></table></div><div class="pager"><span>عرض ${visible.length} من ${filtered.length} صفاً</span><div class="pager-actions"><button class="ghost-btn" id="evidence-prev" ${state.evidencePage <= 1 ? "disabled" : ""}>السابق</button><span style="padding:9px 3px">${state.evidencePage} / ${pages}</span><button class="ghost-btn" id="evidence-next" ${state.evidencePage >= pages ? "disabled" : ""}>التالي</button></div></div><p class="panel-subtitle" style="margin-top:16px">المصدر القابل لإعادة التوليد: <code>evidence-matrix.js</code>، والناتج التفصيلي: <code>EVIDENCE_MATRIX.md</code> و<code>EVIDENCE_MATRIX.csv</code> و<code>evidence-matrix.json</code>.</p></section>`;
+}
+
 const SCENARIOS = [
   ["سلة غذائية من الطلب إلى التسليم", "تجربة كاملة تربط السلة الذكية، المخزون، المستودع، الأسطول، التسليم، ومحفظة الأثر.", ["إنشاء السلة الذكية", "حجز المخزون وإعادة التوريد", "توزيع المسار على الأسطول", "إثبات التسليم وتسجيل الأثر"]],
   ["تاجر جديد إلى قبول موثّق", "مسار تأسيس تاجر يربط الهوية، الثقة، الجدارة، القبول، والعمليات.", ["إنشاء الهوية الرقمية", "تشغيل سجل الثقة", "حساب الجدارة التشغيلية", "إصدار حالة القبول"]],
@@ -181,6 +209,8 @@ function updateNav() {
       count.textContent = FEATURES.filter((feature) => feature.domain === button.dataset.route).length;
     } else if (button.dataset.route === "features") {
       count.textContent = REGISTRY_STATS.canonicalRecords;
+    } else if (button.dataset.route === "evidence") {
+      count.textContent = EVIDENCE_MATRIX_STATS.definedFeatureRows;
     }
   });
 }
@@ -188,6 +218,7 @@ function updateNav() {
 function render() {
   if (state.route === "overview") app.innerHTML = renderOverview();
   else if (state.route === "features") app.innerHTML = renderFeatures();
+  else if (state.route === "evidence") app.innerHTML = renderEvidence();
   else if (state.route === "scenarios") app.innerHTML = renderScenarios();
   else if (state.route === "architecture") app.innerHTML = renderArchitecture();
   else app.innerHTML = renderDomain(state.route);
@@ -221,6 +252,13 @@ function bindEvents() {
   document.getElementById("clear-feature-filter")?.addEventListener("click", () => { state.featureQuery = ""; state.featureDomain = "all"; state.featurePage = 1; render(); });
   document.getElementById("feature-prev")?.addEventListener("click", () => { state.featurePage -= 1; render(); });
   document.getElementById("feature-next")?.addEventListener("click", () => { state.featurePage += 1; render(); });
+  const evidenceSearch = document.getElementById("evidence-search");
+  if (evidenceSearch) evidenceSearch.addEventListener("input", (event) => { state.evidenceQuery = event.target.value; state.evidencePage = 1; render(); document.getElementById("evidence-search")?.focus(); });
+  const evidenceStatus = document.getElementById("evidence-status");
+  if (evidenceStatus) evidenceStatus.addEventListener("change", (event) => { state.evidenceStatus = event.target.value; state.evidencePage = 1; render(); });
+  document.getElementById("clear-evidence-filter")?.addEventListener("click", () => { state.evidenceQuery = ""; state.evidenceStatus = "all"; state.evidencePage = 1; render(); });
+  document.getElementById("evidence-prev")?.addEventListener("click", () => { state.evidencePage -= 1; render(); });
+  document.getElementById("evidence-next")?.addEventListener("click", () => { state.evidencePage += 1; render(); });
 }
 
 document.getElementById("run-demo").addEventListener("click", () => { state.route = "scenarios"; render(); showToast("اختر سيناريو لتشغيل مساره التشغيلي"); });
