@@ -150,3 +150,11 @@ test("acceptance execution keeps the public simulation boundary explicit", () =>
   assert.match(indexSource, /البيانات المعروضة تجريبية/);
   assert.equal(REGISTRY_STATS.definedFeatures, 95);
 });
+
+test("public evidence route exposes functional validation for F01-F06", () => {
+  const harness = createBrowserHarness();
+  harness.routes.get("evidence").click();
+  assert.match(harness.app.innerHTML, /تحقق وظيفي محلي/);
+  assert.match(harness.app.innerHTML, /تحقق وظيفي ناجح محلياً/);
+  assert.match(harness.app.innerHTML, /functional-validation\.js/);
+});
