@@ -23,5 +23,9 @@ jobs:
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Run syntax and evidence tests
         run: npm run check
+      - name: Regenerate evidence matrix
+        run: npm run build:evidence
+      - name: Verify generated evidence files are current
+        run: git diff --exit-code -- evidence-matrix.json EVIDENCE_MATRIX.csv EVIDENCE_MATRIX.md
       - name: Run synthetic benchmark
         run: npm run benchmark
