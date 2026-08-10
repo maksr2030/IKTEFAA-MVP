@@ -88,7 +88,9 @@ The public evidence matrix is available in [EVIDENCE_MATRIX.md](EVIDENCE_MATRIX.
 
 The acceptance results are documented in [ACCEPTANCE_TEST_REPORT.md](ACCEPTANCE_TEST_REPORT.md), and the executable suite is [tests/feature-acceptance.test.cjs](tests/feature-acceptance.test.cjs).
 
-The matrix currently records 23 browser-simulation demonstrations and 72 architecture-only records. It records 23 public browser-rendering acceptance tests, zero live company integrations, zero revenue evidence rows, and zero production implementation claims. The acceptance tests verify traceable feature visibility in the public interface; they do not replace independent technical, security, performance, user-acceptance, or production evidence.
+The matrix currently records 23 browser-simulation demonstrations and 72 architecture-only records. It records 23 public browser-rendering acceptance tests and a local functional-validation package for F01 to F06. The functional package contains deterministic synthetic fixtures, normal-path checks, HOLD safety gates, missing-input checks, replay checks, sensitivity checks, and a chained evidence ledger. It records zero live company integrations, zero revenue evidence rows, and zero production implementation claims. These tests do not replace independent technical, security, performance, user-acceptance, regulatory, or production evidence.
+
+The functional-validation package is available in [FUNCTIONAL_VALIDATION_REPORT.md](FUNCTIONAL_VALIDATION_REPORT.md), [functional-validation.json](functional-validation.json), [functional-evidence-ledger.jsonl](functional-evidence-ledger.jsonl), and [functional-hash-manifest.sha256.json](functional-hash-manifest.sha256.json). Rebuild it with `npm run build:functional-validation` before regenerating the evidence matrix with `npm run build:evidence`.
 
 ## Primary presentation route
 
