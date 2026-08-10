@@ -106,6 +106,7 @@ const FEATURE_ROWS = [
 
 const DOMAIN_LABELS = {
   commerce: "التجارة والأسواق",
+  finance: "المحاسبة والمالية",
   stores: "المتاجر والمخزون",
   "supply-chain": "الإمداد والجودة",
   logistics: "اللوجستيات والأسطول",
