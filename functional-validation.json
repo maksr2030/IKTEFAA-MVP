@@ -1,0 +1,910 @@
+{
+  "validation": {
+    "schemaVersion": "1.0.0",
+    "runId": "IKTEFAA-FVAL-2026-08-10-001",
+    "featureIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "totalFeatures": 6,
+    "passedFeatures": 6,
+    "failedFeatures": 0,
+    "scenarioCount": 30,
+    "passedScenarios": 30,
+    "results": [
+      {
+        "testId": "FVT-001",
+        "featureId": 1,
+        "featureAr": "السلة الذكية",
+        "featureEn": "Smart Basket",
+        "operation": "evaluateSmartBasket",
+        "status": "PASS",
+        "scenarios": {
+          "normal": {
+            "label": "normal",
+            "status": "PASS",
+            "output": {
+              "status": "ACCEPTED",
+              "decision": "basket-ready",
+              "totalMinor": 7050,
+              "itemCount": 3,
+              "unitCount": 6,
+              "lines": [
+                {
+                  "sku": "RICE-5",
+                  "quantity": 2,
+                  "unitPriceMinor": 1250,
+                  "lineTotalMinor": 2500,
+                  "available": true
+                },
+                {
+                  "sku": "OIL-1",
+                  "quantity": 1,
+                  "unitPriceMinor": 1850,
+                  "lineTotalMinor": 1850,
+                  "available": true
+                },
+                {
+                  "sku": "DATE-1",
+                  "quantity": 3,
+                  "unitPriceMinor": 900,
+                  "lineTotalMinor": 2700,
+                  "available": true
+                }
+              ]
+            },
+            "outputDigest": "f1a652a9801b94bb8daec7d835e23688548fe8725cb51eca47a023f4299db234",
+            "expected": {
+              "status": "ACCEPTED",
+              "decision": "basket-ready",
+              "totalMinor": 7050,
+              "unitCount": 6
+            },
+            "error": null
+          },
+          "safety": {
+            "label": "safety-gate",
+            "status": "PASS",
+            "output": {
+              "status": "HOLD",
+              "reason": "inventory-insufficient",
+              "unavailableSkus": [
+                "RICE-5"
+              ],
+              "totalMinor": 6250,
+              "itemCount": 1,
+              "unitCount": 5
+            },
+            "outputDigest": "e8d1d743b22b714e2e7572d1fce883367805b70bb3fb023539baaac6797a4771",
+            "expected": {
+              "status": "HOLD",
+              "reason": "inventory-insufficient"
+            },
+            "error": null
+          },
+          "missing": {
+            "label": "missing-input",
+            "status": "PASS",
+            "output": null,
+            "outputDigest": null,
+            "expected": null,
+            "error": "items must contain at least 1 item(s)"
+          },
+          "replay": {
+            "label": "replay",
+            "status": "PASS",
+            "outputDigest": "f1a652a9801b94bb8daec7d835e23688548fe8725cb51eca47a023f4299db234"
+          },
+          "sensitivity": {
+            "label": "sensitivity",
+            "status": "PASS",
+            "outputDigest": "6b92a4cca53c92601e7d6a327028c4b6b597d8317d2114d9477e64c00ae5496a"
+          }
+        },
+        "claimBoundary": "synthetic local functional validation; not production, security, regulatory, integration, revenue, or acquisition evidence"
+      },
+      {
+        "testId": "FVT-002",
+        "featureId": 2,
+        "featureAr": "المزاد العكسي الذكي",
+        "featureEn": "Smart Reverse Auction™",
+        "operation": "evaluateReverseAuction",
+        "status": "PASS",
+        "scenarios": {
+          "normal": {
+            "label": "normal",
+            "status": "PASS",
+            "output": {
+              "status": "ACCEPTED",
+              "decision": "offer-selected",
+              "selectedSupplierId": "SUP-A",
+              "selectedUnitPriceMinor": 1100,
+              "demandQuantity": 100,
+              "totalMinor": 110000,
+              "eligibleOfferCount": 2,
+              "evaluatedOfferCount": 3
+            },
+            "outputDigest": "541531b291e50d310ffcf2178f5ef4b5ca02c2d5d70d9bc230fbd075b552c67f",
+            "expected": {
+              "status": "ACCEPTED",
+              "decision": "offer-selected",
+              "selectedSupplierId": "SUP-A",
+              "totalMinor": 110000
+            },
+            "error": null
+          },
+          "safety": {
+            "label": "safety-gate",
+            "status": "PASS",
+            "output": {
+              "status": "HOLD",
+              "reason": "no-eligible-offer",
+              "evaluatedOfferCount": 1
+            },
+            "outputDigest": "170ebe4916ec546615cae0fd03d33f91d2823c9324a0e7beea8e4df34a50f88a",
+            "expected": {
+              "status": "HOLD",
+              "reason": "no-eligible-offer"
+            },
+            "error": null
+          },
+          "missing": {
+            "label": "missing-input",
+            "status": "PASS",
+            "output": null,
+            "outputDigest": null,
+            "expected": null,
+            "error": "demandQuantity must be a positive integer"
+          },
+          "replay": {
+            "label": "replay",
+            "status": "PASS",
+            "outputDigest": "541531b291e50d310ffcf2178f5ef4b5ca02c2d5d70d9bc230fbd075b552c67f"
+          },
+          "sensitivity": {
+            "label": "sensitivity",
+            "status": "PASS",
+            "outputDigest": "caf770ed2eeb1d224ffb79852631aaf8333b360e410d069590c87590760b5998"
+          }
+        },
+        "claimBoundary": "synthetic local functional validation; not production, security, regulatory, integration, revenue, or acquisition evidence"
+      },
+      {
+        "testId": "FVT-003",
+        "featureId": 3,
+        "featureAr": "التقارير المحاسبية المؤتمتة والقابلة للطباعة",
+        "featureEn": "Automated & Printable Accounting Reports™",
+        "operation": "evaluateAccountingReport",
+        "status": "PASS",
+        "scenarios": {
+          "normal": {
+            "label": "normal",
+            "status": "PASS",
+            "output": {
+              "status": "ACCEPTED",
+              "decision": "report-ready-for-review",
+              "debitMinor": 7050,
+              "creditMinor": 7050,
+              "balanced": true,
+              "rowCount": 2,
+              "printableRows": [
+                "T-001|inventory|7050|0",
+                "T-001|payable|0|7050"
+              ]
+            },
+            "outputDigest": "868fd4c6086688dfabdea506d18a62f243603297130f32a422efc49bc5da4aa0",
+            "expected": {
+              "status": "ACCEPTED",
+              "decision": "report-ready-for-review",
+              "balanced": true,
+              "debitMinor": 7050,
+              "creditMinor": 7050,
+              "rowCount": 2
+            },
+            "error": null
+          },
+          "safety": {
+            "label": "safety-gate",
+            "status": "PASS",
+            "output": {
+              "status": "HOLD",
+              "reason": "unbalanced-ledger",
+              "debitMinor": 7050,
+              "creditMinor": 7000,
+              "balanced": false,
+              "rowCount": 2
+            },
+            "outputDigest": "c1c213d347824ccec1db898c48ffbc81eddd42a92d31d4a3711350647bce6d37",
+            "expected": {
+              "status": "HOLD",
+              "reason": "unbalanced-ledger",
+              "balanced": false
+            },
+            "error": null
+          },
+          "missing": {
+            "label": "missing-input",
+            "status": "PASS",
+            "output": null,
+            "outputDigest": null,
+            "expected": null,
+            "error": "entries must contain at least 1 item(s)"
+          },
+          "replay": {
+            "label": "replay",
+            "status": "PASS",
+            "outputDigest": "868fd4c6086688dfabdea506d18a62f243603297130f32a422efc49bc5da4aa0"
+          },
+          "sensitivity": {
+            "label": "sensitivity",
+            "status": "PASS",
+            "outputDigest": "5f0b293ae7aec7be71b712aa550d1f862ccb5188a523672fd5c4f1547dea6a34"
+          }
+        },
+        "claimBoundary": "synthetic local functional validation; not production, security, regulatory, integration, revenue, or acquisition evidence"
+      },
+      {
+        "testId": "FVT-004",
+        "featureId": 4,
+        "featureAr": "محرك الهوية الرقمية الآمنة",
+        "featureEn": "Secure Digital Identity Engine™",
+        "operation": "evaluateDigitalIdentity",
+        "status": "PASS",
+        "scenarios": {
+          "normal": {
+            "label": "normal",
+            "status": "PASS",
+            "output": {
+              "status": "ACCEPTED",
+              "decision": "identity-evidence-complete",
+              "subjectId": "merchant-demo-001",
+              "evidenceCount": 2,
+              "evidenceDigest": "e6c9044c2fbeea04b08672407a9ccf9b5dea771f2cf38ec47c1df346c583dfbe",
+              "verificationMode": "synthetic-evidence-check"
+            },
+            "outputDigest": "cf00f9ad8f8ba0d3f6fd82e06142aef79e1cbb89c244b5d218e640cce89be99c",
+            "expected": {
+              "status": "ACCEPTED",
+              "decision": "identity-evidence-complete",
+              "evidenceCount": 2,
+              "verificationMode": "synthetic-evidence-check"
+            },
+            "error": null
+          },
+          "safety": {
+            "label": "safety-gate",
+            "status": "PASS",
+            "output": {
+              "status": "HOLD",
+              "reason": "unverified-evidence",
+              "subjectId": "merchant-demo-001",
+              "evidenceCount": 2,
+              "unverifiedEvidenceTypes": [
+                "contact"
+              ]
+            },
+            "outputDigest": "6647751e5ed2a16ec5cf08d02cb1e8c302f6f58c92b7c63e5ad6e036953e37b4",
+            "expected": {
+              "status": "HOLD",
+              "reason": "unverified-evidence"
+            },
+            "error": null
+          },
+          "missing": {
+            "label": "missing-input",
+            "status": "PASS",
+            "output": null,
+            "outputDigest": null,
+            "expected": null,
+            "error": "evidence must contain at least 2 item(s)"
+          },
+          "replay": {
+            "label": "replay",
+            "status": "PASS",
+            "outputDigest": "cf00f9ad8f8ba0d3f6fd82e06142aef79e1cbb89c244b5d218e640cce89be99c"
+          },
+          "sensitivity": {
+            "label": "sensitivity",
+            "status": "PASS",
+            "outputDigest": "1abf0a53e517a2ef4d18ed4a52c53e9c369c0a207ffc8369b5f82b131848b56b"
+          }
+        },
+        "claimBoundary": "synthetic local functional validation; not production, security, regulatory, integration, revenue, or acquisition evidence"
+      },
+      {
+        "testId": "FVT-005",
+        "featureId": 5,
+        "featureAr": "نظام المزادات الخيرية الموجّهة",
+        "featureEn": "Charity-Oriented Auctions™",
+        "operation": "evaluateCharityAuction",
+        "status": "PASS",
+        "scenarios": {
+          "normal": {
+            "label": "normal",
+            "status": "PASS",
+            "output": {
+              "status": "ACCEPTED",
+              "decision": "charity-allocation-ready",
+              "lotId": "LOT-CHARITY-001",
+              "winningBidderId": "DONOR-1",
+              "winningAmountMinor": 6500,
+              "charityAllocationMinor": 6500,
+              "eligibleBidCount": 2,
+              "evaluatedBidCount": 4
+            },
+            "outputDigest": "fcedfe4952503c705672a7b57d2ed7efec4e9ddb38375ca15b749f7dab5912b8",
+            "expected": {
+              "status": "ACCEPTED",
+              "decision": "charity-allocation-ready",
+              "winningBidderId": "DONOR-1",
+              "winningAmountMinor": 6500,
+              "charityAllocationMinor": 6500
+            },
+            "error": null
+          },
+          "safety": {
+            "label": "safety-gate",
+            "status": "PASS",
+            "output": {
+              "status": "HOLD",
+              "reason": "reserve-not-met",
+              "lotId": "LOT-CHARITY-001",
+              "evaluatedBidCount": 1
+            },
+            "outputDigest": "7ee5669526fdbf35e0f6879b127a972a1d7e78f00efc81c23b0a373c08084ca4",
+            "expected": {
+              "status": "HOLD",
+              "reason": "reserve-not-met"
+            },
+            "error": null
+          },
+          "missing": {
+            "label": "missing-input",
+            "status": "PASS",
+            "output": null,
+            "outputDigest": null,
+            "expected": null,
+            "error": "reservePriceMinor must be a non-negative integer"
+          },
+          "replay": {
+            "label": "replay",
+            "status": "PASS",
+            "outputDigest": "fcedfe4952503c705672a7b57d2ed7efec4e9ddb38375ca15b749f7dab5912b8"
+          },
+          "sensitivity": {
+            "label": "sensitivity",
+            "status": "PASS",
+            "outputDigest": "7a9a354460acaa45dcf4f19e1126483d2742df36858f73fc48d846d838cbf77a"
+          }
+        },
+        "claimBoundary": "synthetic local functional validation; not production, security, regulatory, integration, revenue, or acquisition evidence"
+      },
+      {
+        "testId": "FVT-006",
+        "featureId": 6,
+        "featureAr": "نظام الذكاء الاصطناعي للتنبؤ بالطلب",
+        "featureEn": "AI Demand Forecasting Engine™",
+        "operation": "evaluateDemandForecast",
+        "status": "PASS",
+        "scenarios": {
+          "normal": {
+            "label": "normal",
+            "status": "PASS",
+            "output": {
+              "status": "ACCEPTED",
+              "decision": "forecast-ready-for-review",
+              "method": "simple-moving-average",
+              "window": 3,
+              "horizon": 2,
+              "forecast": [
+                130,
+                130
+              ],
+              "backtest": [
+                {
+                  "index": 3,
+                  "predicted": 110,
+                  "actual": 130,
+                  "absoluteError": 20
+                },
+                {
+                  "index": 4,
+                  "predicted": 120,
+                  "actual": 120,
+                  "absoluteError": 0
+                },
+                {
+                  "index": 5,
+                  "predicted": 123.3333,
+                  "actual": 140,
+                  "absoluteError": 16.6667
+                }
+              ],
+              "meanAbsoluteError": 12.2222,
+              "validationBoundary": "synthetic-temporal-holdout"
+            },
+            "outputDigest": "088749bc05d3fbc2884380d90d86568ce8e38a73ccbfe7936d9dafdc4330cfdb",
+            "expected": {
+              "status": "ACCEPTED",
+              "decision": "forecast-ready-for-review",
+              "method": "simple-moving-average",
+              "forecast": [
+                130,
+                130
+              ],
+              "horizon": 2,
+              "validationBoundary": "synthetic-temporal-holdout"
+            },
+            "error": null
+          },
+          "safety": {
+            "label": "safety-gate",
+            "status": "PASS",
+            "output": {
+              "status": "HOLD",
+              "reason": "insufficient-history",
+              "seriesLength": 4
+            },
+            "outputDigest": "bd1d8bd6153d9851c0ee3db891c5d00a7a5346bf49ae2e1913d00d8bb2e22368",
+            "expected": {
+              "status": "HOLD",
+              "reason": "insufficient-history"
+            },
+            "error": null
+          },
+          "missing": {
+            "label": "missing-input",
+            "status": "PASS",
+            "output": null,
+            "outputDigest": null,
+            "expected": null,
+            "error": "horizon must be a positive integer"
+          },
+          "replay": {
+            "label": "replay",
+            "status": "PASS",
+            "outputDigest": "088749bc05d3fbc2884380d90d86568ce8e38a73ccbfe7936d9dafdc4330cfdb"
+          },
+          "sensitivity": {
+            "label": "sensitivity",
+            "status": "PASS",
+            "outputDigest": "1c0d020f64ae21a7d0c38983866330784c5ffcce914e4142e7cc2d16a33659fa"
+          }
+        },
+        "claimBoundary": "synthetic local functional validation; not production, security, regulatory, integration, revenue, or acquisition evidence"
+      }
+    ],
+    "reproducibility": {
+      "deterministicInputs": true,
+      "replayDigestChecked": true,
+      "externalConnections": false,
+      "dataClassification": "synthetic"
+    }
+  },
+  "caseDefinitions": [
+    {
+      "testId": "FVT-001",
+      "featureId": 1,
+      "featureAr": "السلة الذكية",
+      "featureEn": "Smart Basket",
+      "operation": "evaluateSmartBasket",
+      "normalInput": {
+        "items": [
+          {
+            "sku": "RICE-5",
+            "quantity": 2,
+            "unitPriceMinor": 1250,
+            "availableQuantity": 4
+          },
+          {
+            "sku": "OIL-1",
+            "quantity": 1,
+            "unitPriceMinor": 1850,
+            "availableQuantity": 5
+          },
+          {
+            "sku": "DATE-1",
+            "quantity": 3,
+            "unitPriceMinor": 900,
+            "availableQuantity": 3
+          }
+        ]
+      },
+      "normalExpected": {
+        "status": "ACCEPTED",
+        "decision": "basket-ready",
+        "totalMinor": 7050,
+        "unitCount": 6
+      },
+      "safetyInput": {
+        "items": [
+          {
+            "sku": "RICE-5",
+            "quantity": 5,
+            "unitPriceMinor": 1250,
+            "availableQuantity": 4
+          }
+        ]
+      },
+      "safetyExpected": {
+        "status": "HOLD",
+        "reason": "inventory-insufficient"
+      },
+      "sensitivityInput": {
+        "items": [
+          {
+            "sku": "RICE-5",
+            "quantity": 3,
+            "unitPriceMinor": 1250,
+            "availableQuantity": 4
+          }
+        ]
+      },
+      "missingInput": {},
+      "missingError": {}
+    },
+    {
+      "testId": "FVT-002",
+      "featureId": 2,
+      "featureAr": "المزاد العكسي الذكي",
+      "featureEn": "Smart Reverse Auction™",
+      "operation": "evaluateReverseAuction",
+      "normalInput": {
+        "demandQuantity": 100,
+        "maximumUnitPriceMinor": 1200,
+        "offers": [
+          {
+            "supplierId": "SUP-A",
+            "quantity": 100,
+            "unitPriceMinor": 1100
+          },
+          {
+            "supplierId": "SUP-B",
+            "quantity": 80,
+            "unitPriceMinor": 1050
+          },
+          {
+            "supplierId": "SUP-C",
+            "quantity": 150,
+            "unitPriceMinor": 1150
+          }
+        ]
+      },
+      "normalExpected": {
+        "status": "ACCEPTED",
+        "decision": "offer-selected",
+        "selectedSupplierId": "SUP-A",
+        "totalMinor": 110000
+      },
+      "safetyInput": {
+        "demandQuantity": 100,
+        "maximumUnitPriceMinor": 1000,
+        "offers": [
+          {
+            "supplierId": "SUP-A",
+            "quantity": 100,
+            "unitPriceMinor": 1100
+          }
+        ]
+      },
+      "safetyExpected": {
+        "status": "HOLD",
+        "reason": "no-eligible-offer"
+      },
+      "sensitivityInput": {
+        "demandQuantity": 100,
+        "maximumUnitPriceMinor": 1000,
+        "offers": [
+          {
+            "supplierId": "SUP-A",
+            "quantity": 100,
+            "unitPriceMinor": 950
+          },
+          {
+            "supplierId": "SUP-B",
+            "quantity": 100,
+            "unitPriceMinor": 980
+          }
+        ]
+      },
+      "missingInput": {
+        "offers": []
+      },
+      "missingError": {}
+    },
+    {
+      "testId": "FVT-003",
+      "featureId": 3,
+      "featureAr": "التقارير المحاسبية المؤتمتة والقابلة للطباعة",
+      "featureEn": "Automated & Printable Accounting Reports™",
+      "operation": "evaluateAccountingReport",
+      "normalInput": {
+        "entries": [
+          {
+            "entryId": "T-001",
+            "account": "inventory",
+            "debitMinor": 7050,
+            "creditMinor": 0
+          },
+          {
+            "entryId": "T-001",
+            "account": "payable",
+            "debitMinor": 0,
+            "creditMinor": 7050
+          }
+        ]
+      },
+      "normalExpected": {
+        "status": "ACCEPTED",
+        "decision": "report-ready-for-review",
+        "balanced": true,
+        "debitMinor": 7050,
+        "creditMinor": 7050,
+        "rowCount": 2
+      },
+      "safetyInput": {
+        "entries": [
+          {
+            "entryId": "T-001",
+            "account": "inventory",
+            "debitMinor": 7050,
+            "creditMinor": 0
+          },
+          {
+            "entryId": "T-001",
+            "account": "payable",
+            "debitMinor": 0,
+            "creditMinor": 7000
+          }
+        ]
+      },
+      "safetyExpected": {
+        "status": "HOLD",
+        "reason": "unbalanced-ledger",
+        "balanced": false
+      },
+      "sensitivityInput": {
+        "entries": [
+          {
+            "entryId": "T-001",
+            "account": "inventory",
+            "debitMinor": 7050,
+            "creditMinor": 0
+          },
+          {
+            "entryId": "T-001",
+            "account": "payable",
+            "debitMinor": 0,
+            "creditMinor": 7050
+          },
+          {
+            "entryId": "T-002",
+            "account": "review",
+            "debitMinor": 1,
+            "creditMinor": 0
+          }
+        ]
+      },
+      "missingInput": {},
+      "missingError": {}
+    },
+    {
+      "testId": "FVT-004",
+      "featureId": 4,
+      "featureAr": "محرك الهوية الرقمية الآمنة",
+      "featureEn": "Secure Digital Identity Engine™",
+      "operation": "evaluateDigitalIdentity",
+      "normalInput": {
+        "subjectId": "merchant-demo-001",
+        "evidence": [
+          {
+            "type": "registration",
+            "reference": "REG-001",
+            "verified": true
+          },
+          {
+            "type": "contact",
+            "reference": "CONTACT-001",
+            "verified": true
+          }
+        ]
+      },
+      "normalExpected": {
+        "status": "ACCEPTED",
+        "decision": "identity-evidence-complete",
+        "evidenceCount": 2,
+        "verificationMode": "synthetic-evidence-check"
+      },
+      "safetyInput": {
+        "subjectId": "merchant-demo-001",
+        "evidence": [
+          {
+            "type": "registration",
+            "reference": "REG-001",
+            "verified": true
+          },
+          {
+            "type": "contact",
+            "reference": "CONTACT-001",
+            "verified": false
+          }
+        ]
+      },
+      "safetyExpected": {
+        "status": "HOLD",
+        "reason": "unverified-evidence"
+      },
+      "sensitivityInput": {
+        "subjectId": "merchant-demo-001",
+        "evidence": [
+          {
+            "type": "registration",
+            "reference": "REG-001",
+            "verified": true
+          },
+          {
+            "type": "contact",
+            "reference": "CONTACT-001",
+            "verified": true
+          },
+          {
+            "type": "licence",
+            "reference": "LIC-001",
+            "verified": true
+          }
+        ]
+      },
+      "missingInput": {
+        "subjectId": "merchant-demo-001"
+      },
+      "missingError": {}
+    },
+    {
+      "testId": "FVT-005",
+      "featureId": 5,
+      "featureAr": "نظام المزادات الخيرية الموجّهة",
+      "featureEn": "Charity-Oriented Auctions™",
+      "operation": "evaluateCharityAuction",
+      "normalInput": {
+        "lotId": "LOT-CHARITY-001",
+        "reservePriceMinor": 5000,
+        "bids": [
+          {
+            "bidderId": "DONOR-2",
+            "amountMinor": 6500,
+            "donorConsent": true
+          },
+          {
+            "bidderId": "DONOR-1",
+            "amountMinor": 6500,
+            "donorConsent": true
+          },
+          {
+            "bidderId": "DONOR-3",
+            "amountMinor": 4000,
+            "donorConsent": true
+          },
+          {
+            "bidderId": "DONOR-4",
+            "amountMinor": 9000,
+            "donorConsent": false
+          }
+        ]
+      },
+      "normalExpected": {
+        "status": "ACCEPTED",
+        "decision": "charity-allocation-ready",
+        "winningBidderId": "DONOR-1",
+        "winningAmountMinor": 6500,
+        "charityAllocationMinor": 6500
+      },
+      "safetyInput": {
+        "lotId": "LOT-CHARITY-001",
+        "reservePriceMinor": 10000,
+        "bids": [
+          {
+            "bidderId": "DONOR-1",
+            "amountMinor": 6500,
+            "donorConsent": true
+          }
+        ]
+      },
+      "safetyExpected": {
+        "status": "HOLD",
+        "reason": "reserve-not-met"
+      },
+      "sensitivityInput": {
+        "lotId": "LOT-CHARITY-001",
+        "reservePriceMinor": 5000,
+        "bids": [
+          {
+            "bidderId": "DONOR-1",
+            "amountMinor": 7500,
+            "donorConsent": true
+          }
+        ]
+      },
+      "missingInput": {
+        "lotId": "LOT-CHARITY-001",
+        "bids": []
+      },
+      "missingError": {}
+    },
+    {
+      "testId": "FVT-006",
+      "featureId": 6,
+      "featureAr": "نظام الذكاء الاصطناعي للتنبؤ بالطلب",
+      "featureEn": "AI Demand Forecasting Engine™",
+      "operation": "evaluateDemandForecast",
+      "normalInput": {
+        "series": [
+          100,
+          110,
+          120,
+          130,
+          120,
+          140
+        ],
+        "window": 3,
+        "horizon": 2
+      },
+      "normalExpected": {
+        "status": "ACCEPTED",
+        "decision": "forecast-ready-for-review",
+        "method": "simple-moving-average",
+        "forecast": [
+          130,
+          130
+        ],
+        "horizon": 2,
+        "validationBoundary": "synthetic-temporal-holdout"
+      },
+      "safetyInput": {
+        "series": [
+          100,
+          110,
+          120,
+          130
+        ],
+        "window": 4,
+        "horizon": 2
+      },
+      "safetyExpected": {
+        "status": "HOLD",
+        "reason": "insufficient-history"
+      },
+      "sensitivityInput": {
+        "series": [
+          100,
+          110,
+          120,
+          130,
+          120,
+          200
+        ],
+        "window": 3,
+        "horizon": 2
+      },
+      "missingInput": {
+        "series": [
+          100,
+          110,
+          120,
+          130
+        ],
+        "window": 3
+      },
+      "missingError": {}
+    }
+  ],
+  "ledgerSummary": {
+    "entries": 30,
+    "chainVerified": true,
+    "firstEntryDigest": "e01ca7203c055e2300444670a1bea057f4f1cb983df105ef4c1c039d3e86ae76",
+    "lastEntryDigest": "f6dca14f717b8a56a90923253465cd0fd7cd605602dbf7fde8948a74603b47a5"
+  }
+}
