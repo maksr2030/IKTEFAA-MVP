@@ -1,0 +1,7 @@
+Copyright (c) 2026 Mohamed Rihan
+
+All rights reserved.
+
+This repository is publicly visible for technical review and strategic acquisition discussion only. No permission is granted to copy, modify, distribute, commercialise, sublicense, reverse engineer, register, or create derivative products from the repository contents without prior written permission from the rights holder.
+
+Public visibility does not constitute an assignment, licence, waiver, or transfer of intellectual-property rights.
