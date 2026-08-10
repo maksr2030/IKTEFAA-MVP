@@ -33,5 +33,5 @@ test("matrix does not convert architecture or reserved records into implementati
   const reservedRows = EVIDENCE_MATRIX.filter((row) => row.registryStatus === "reserved");
   assert.ok(architectureRows.every((row) => row.verificationStatus === "not-implemented-in-public-mvp"));
   assert.ok(reservedRows.every((row) => row.verificationStatus === "excluded-from-defined-feature-coverage"));
-  assert.equal(EVIDENCE_MATRIX_STATS.featureSpecificAcceptanceTests, 0);
+  assert.equal(EVIDENCE_MATRIX_STATS.featureSpecificAcceptanceTests, 23);
 });
