@@ -26,6 +26,11 @@ test("evidence matrix preserves actual registry status and defined-feature count
   assert.equal(EVIDENCE_MATRIX_STATS.demonstratedRows, 23);
   assert.equal(EVIDENCE_MATRIX_STATS.architectureRows, 72);
   assert.equal(EVIDENCE_MATRIX_STATS.reservedRows, 5);
+  assert.equal(EVIDENCE_MATRIX_STATS.functionalValidationRows, 6);
+  assert.deepEqual(
+    EVIDENCE_MATRIX.filter((row) => row.functionalValidationStatus === "passed").map((row) => row.featureId),
+    [1, 2, 3, 4, 5, 6]
+  );
 });
 
 test("matrix does not convert architecture or reserved records into implementation claims", () => {
@@ -34,4 +39,5 @@ test("matrix does not convert architecture or reserved records into implementati
   assert.ok(architectureRows.every((row) => row.verificationStatus === "not-implemented-in-public-mvp"));
   assert.ok(reservedRows.every((row) => row.verificationStatus === "excluded-from-defined-feature-coverage"));
   assert.equal(EVIDENCE_MATRIX_STATS.featureSpecificAcceptanceTests, 23);
+  assert.ok(architectureRows.every((row) => row.functionalValidationStatus === "not-applicable"));
 });
