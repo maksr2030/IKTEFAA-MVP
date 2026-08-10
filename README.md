@@ -86,7 +86,9 @@ The current MVP is a static, inspectable reference implementation. The productio
 
 The public evidence matrix is available in [EVIDENCE_MATRIX.md](EVIDENCE_MATRIX.md), [EVIDENCE_MATRIX.csv](EVIDENCE_MATRIX.csv), and [evidence-matrix.json](evidence-matrix.json). It is generated from `features.js` so that record identifiers, duplicate lineage, domain classification, and status cannot drift silently from the public registry.
 
-The matrix currently records 23 browser-simulation demonstrations and 72 architecture-only records. It records zero live company integrations, zero revenue evidence rows, and zero feature-specific acceptance tests. These boundaries remain visible until independent evidence exists.
+The acceptance results are documented in [ACCEPTANCE_TEST_REPORT.md](ACCEPTANCE_TEST_REPORT.md), and the executable suite is [tests/feature-acceptance.test.cjs](tests/feature-acceptance.test.cjs).
+
+The matrix currently records 23 browser-simulation demonstrations and 72 architecture-only records. It records 23 public browser-rendering acceptance tests, zero live company integrations, zero revenue evidence rows, and zero production implementation claims. The acceptance tests verify traceable feature visibility in the public interface; they do not replace independent technical, security, performance, user-acceptance, or production evidence.
 
 ## Primary presentation route
 
