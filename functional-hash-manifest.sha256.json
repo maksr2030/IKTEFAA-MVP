@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "1.0.0",
+  "runId": "IKTEFAA-FVAL-2026-08-10-001",
+  "files": {
+    "functional-validation.json": "e3c75d9ba45d34fce5be47a1345889e283f5137108446453c23b86e60a7fd2c7",
+    "functional-evidence-ledger.jsonl": "35dfe40a0d869f4713fcbd99e71d7f3741348582515c16014b08a4f406d66b1f",
+    "FUNCTIONAL_VALIDATION_REPORT.md": "5f9797afc2891466a27ca08be146014abbbc171b4f404cd03b0db5ae951899a6"
+  },
+  "manifestDigest": "166496af7deba5b91d21b5074061c5113a9fce74c218db37e8821ff6dbc83ef2"
+}
